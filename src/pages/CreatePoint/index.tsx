@@ -91,6 +91,7 @@ const CreatePoint = () => {
               </li>
           </ul>
         </fieldset>
+        <button type="submit" />
       </form>
     </div>
   );
