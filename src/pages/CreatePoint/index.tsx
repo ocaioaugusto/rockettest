@@ -1,14 +1,13 @@
 import React from "react";
-import logo from "../../assets/logo.svg";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import "./styles.css";
+import "./CreatePoint.css"
 
 const CreatePoint = () => {
   return (
     <div id="page-create-point">
       <header>
-        <img src={logo} alt="" />
+        {/* <img src={logo} alt="" /> */}
         <Link to="/">
           <FiArrowLeft />
           Voltar para home

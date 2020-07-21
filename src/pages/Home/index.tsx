@@ -1,15 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./styles.css";
-import logo from "../../assets/logo.svg"
+// import logo from "../../assets/logo.svg"
 import { FiLogIn } from "react-icons/fi"
+import "./Home.css"
 
 const Home = () => {
   return (
     <div id="page-home">
       <div className="content">
           <header>
-        <img src={logo} alt="coleta" />
+        {/* <img src={logo} alt="coleta" /> */}
         </header>
 
       <main>
