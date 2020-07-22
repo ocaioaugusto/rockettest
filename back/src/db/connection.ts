@@ -9,7 +9,7 @@ const connection = knex({
     migrations: {
         directory: path.resolve(__dirname, "src", "db", "migrations")
     },
-    useNullAsDefault: false,
+    useNullAsDefault: true,
 });
 
 export default connection;
