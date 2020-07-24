@@ -1,4 +1,4 @@
-import knex from "knex";
+import knex from "../db/connection";
 import { Request, Response } from "express";
 
 class ItemsController {
