@@ -1,7 +1,8 @@
 import React from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import "./CreatePoint.css"
+import "./CreatePoint.css";
+import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 
 const CreatePoint = () => {
   return (
@@ -42,6 +43,14 @@ const CreatePoint = () => {
             <h2>Endereço</h2>
             <span>Selecione o endereço do mapa</span>
           </legend>
+          <Map center={[-23.5407043, -46.6419712]} zoom={15}>
+            <TileLayer
+              attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            <Marker position={[-23.5407043, -46.6419712]} />
+          </Map>
           <div className="field-group">
             <div className="field">
               <label htmlFor="uf">Estado (UF)</label>
@@ -64,33 +73,33 @@ const CreatePoint = () => {
             <span>Selecione um ou mais ítens abaixo</span>
           </legend>
           <ul className="items-grid">
-              <li>
-                  <img src={"teste"} />
-                  <span>Teste</span>
-              </li>
-              <li>
-                  <img src={"teste"} />
-                  <span>Teste</span>
-              </li>
-              <li>
-                  <img src={"teste"} />
-                  <span>Teste</span>
-              </li>
-              <li>
-                  <img src={"teste"} />
-                  <span>Teste</span>
-              </li>
-              <li>
-                  <img src={"teste"} />
-                  <span>Teste</span>
-              </li>
-              <li>
-                  <img src={"teste"} />
-                  <span>Teste</span>
-              </li>
+            <li>
+              <img src="http://localhost:3333/uploads/lampadas.svg" />
+              <span>Teste</span>
+            </li>
+            <li>
+              <img src="http://localhost:3333/uploads/lampadas.svg" />
+              <span>Teste</span>
+            </li>
+            <li>
+              <img src="http://localhost:3333/uploads/lampadas.svg" />
+              <span>Teste</span>
+            </li>
+            <li>
+              <img src="http://localhost:3333/uploads/lampadas.svg" />
+              <span>Teste</span>
+            </li>
+            <li>
+              <img src="http://localhost:3333/uploads/lampadas.svg" />
+              <span>Teste</span>
+            </li>
+            <li>
+              <img src="http://localhost:3333/uploads/lampadas.svg" />
+              <span>Teste</span>
+            </li>
           </ul>
         </fieldset>
-        <button type="submit" />
+        <button type="submit">Cadastrar</button>
       </form>
     </div>
   );
