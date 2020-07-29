@@ -26,6 +26,12 @@ interface ICity {
 
 const CreatePoint = () => {
   const [items, setItems] = useState<IDataItem[]>([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    whatsapp: "",
+  })
+  const [selectedItem, setSelectedItem] = useState<number[]>([]);
   const [uf, setUf] = useState<IUf[]>();
   const [selectedUf, setSelectedUf] = useState("");
   const [cities, setCities] = useState<ICity[]>();
@@ -65,6 +71,15 @@ const CreatePoint = () => {
     }
   }, [selectedUf]);
 
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value})
+  };
+
+  const handleSelectItem = (id: number) => {
+    setSelectedItem([...selectedItem, id ])
+  }
+
   return (
     <div id="page-create-point">
       <header>
@@ -84,16 +99,31 @@ const CreatePoint = () => {
           </legend>
           <div className="field">
             <label htmlFor="name">Nome da entidade</label>
-            <input type="text" name="name" id="name" />
+            <input
+              type="text"
+              name="name"
+              id="name"
+              onChange={handleInputChange}
+            />
           </div>
           <div className="field-group">
             <div className="field">
               <label htmlFor="email">E-mail</label>
-              <input type="email" name="email" id="email" />
+              <input
+                type="email"
+                name="email"
+                id="email"
+                onChange={handleInputChange}
+              />
             </div>
             <div className="field">
               <label htmlFor="whatsapp">Whatsapp</label>
-              <input type="text" name="whatsapp" id="whatsapp" />
+              <input
+                type="text"
+                name="whatsapp"
+                id="whatsapp"
+                onChange={handleInputChange}
+              />
             </div>
           </div>
         </fieldset>
@@ -162,7 +192,11 @@ const CreatePoint = () => {
           </legend>
           <ul className="items-grid">
             {items.map((item) => (
-              <li key={item.id}>
+              <li 
+                className={selectedItem.includes(item.id) ? "selected" : ""} 
+                key={item.id} 
+                onClick={() => handleSelectItem(item.id)}
+              >
                 <img src={item.image_url} alt={item.title} />
                 <span>{item.title}</span>
               </li>
