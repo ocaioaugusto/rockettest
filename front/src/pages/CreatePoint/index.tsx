@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./CreatePoint.css";
@@ -30,7 +30,7 @@ const CreatePoint = () => {
     name: "",
     email: "",
     whatsapp: "",
-  })
+  });
   const [selectedItem, setSelectedItem] = useState<number[]>([]);
   const [uf, setUf] = useState<IUf[]>();
   const [selectedUf, setSelectedUf] = useState("");
@@ -73,12 +73,43 @@ const CreatePoint = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value})
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSelectItem = (id: number) => {
-    setSelectedItem([...selectedItem, id ])
-  }
+    const alreadySelected = selectedItem.findIndex((item) => item === id);
+
+    if (alreadySelected >= 0) {
+      const filteredItem = selectedItem.filter((item) => item !== id);
+
+      setSelectedItem(filteredItem);
+    } else {
+      setSelectedItem([...selectedItem, id]);
+    }
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const { name, email, whatsapp } = formData;
+    const uf = selectedUf;
+    const city = selectedCity;
+    const [latitude, longitude] = selectedMapPosition;
+    const items = selectedItem;
+
+    const data = {
+      name,
+      email,
+      whatsapp,
+      uf,
+      city,
+      latitude,
+      longitude,
+      items,
+    };
+
+    // await api.post("points", data)
+  };
 
   return (
     <div id="page-create-point">
@@ -89,7 +120,7 @@ const CreatePoint = () => {
           Voltar para home
         </Link>
       </header>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1>
           Cadastro do <br /> ponto de coleta
         </h1>
@@ -192,9 +223,9 @@ const CreatePoint = () => {
           </legend>
           <ul className="items-grid">
             {items.map((item) => (
-              <li 
-                className={selectedItem.includes(item.id) ? "selected" : ""} 
-                key={item.id} 
+              <li
+                className={selectedItem.includes(item.id) ? "selected" : ""}
+                key={item.id}
                 onClick={() => handleSelectItem(item.id)}
               >
                 <img src={item.image_url} alt={item.title} />
