@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./CreatePoint.css";
@@ -26,9 +26,15 @@ interface ICity {
 const CreatePoint = () => {
   const [items, setItems] = useState<IDataItem[]>([]);
   const [uf, setUf] = useState<IUf[]>();
-  const [selectedUf, setSelectedUf] = useState();
+  const [selectedUf, setSelectedUf] = useState("");
   const [cities, setCities] = useState<ICity[]>();
-  const [selectedCity, setSelectedCity] = useState();
+  const [selectedCity, setSelectedCity] = useState("");
+
+  useEffect(() => {
+    api.get("items").then((res) => {
+      setItems(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     Axios.get(
@@ -37,16 +43,13 @@ const CreatePoint = () => {
   }, []);
 
   useEffect(() => {
-    Axios.get(
-      `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`
-    ).then((res) => setCities(res.data));
+    if (selectedUf) {
+      Axios.get(
+        `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUf}/municipios`
+      ).then((res) => setCities(res.data));
+    }
   }, [selectedUf]);
 
-  useEffect(() => {
-    api.get("items").then((res) => {
-      setItems(res.data);
-    });
-  }, []);
   return (
     <div id="page-create-point">
       <header>
@@ -96,7 +99,14 @@ const CreatePoint = () => {
           <div className="field-group">
             <div className="field">
               <label htmlFor="uf">Estado (UF)</label>
-              <select name="uf" id="uf" onChange={(e) => setSelectedUf(e.target.value)}>
+              <select
+                name="uf"
+                id="uf"
+                value={selectedUf}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  setSelectedUf(e.target.value)
+                }
+              >
                 <option value="0">Selecione</option>
                 {uf &&
                   uf.map((state: IUf) => (
@@ -106,12 +116,19 @@ const CreatePoint = () => {
             </div>
             <div className="field">
               <label htmlFor="city">Cidade</label>
-              <select name="city" id="city" onChange={(e) => setSelectedCity(e.target.value)} >
-                <option value="0">Selecione</option>
-                {cities && cities.map((city: ICity) => (
-                    <option value={city.id}>{city.nome}</option>
-                  ))
+              <select
+                name="city"
+                id="city"
+                value={selectedCity}
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+                  setSelectedCity(e.target.value)
                 }
+              >
+                <option value="0">Selecione</option>
+                {cities &&
+                  cities.map((city: ICity) => (
+                    <option value={city.id}>{city.nome}</option>
+                  ))}
               </select>
             </div>
           </div>
